@@ -8,17 +8,17 @@ def matrix_divided(matrix, div):
 
     if not matrix or not isinstance(matrix, list):
         raise TypeError("matrix must be a matrix (list of lists)\
-                         of integers/floats")
+of integers/floats")
 
     for i in matrix:
         if not i or not isinstance(i, list):
             raise TypeError("matrix must be a matrix (list of lists)\
-                             of integers/floats")
+of integers/floats")
 
         for j in i:
             if not isinstance(j, int) and not isinstance(j, float):
                 raise TypeError("matrix must be a matrix (list of lists)\
-                                 of integers/floats")
+of integers/floats")
 
         if row_size is None:
             row_size = len(i)
