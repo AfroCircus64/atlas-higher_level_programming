@@ -3,6 +3,9 @@
 Function say_my_name
 ===================================
 
+		>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+
 Regular functionality:
 	    >>> say_my_name("Steve", "Perry")
 	    My name is Steve Perry
