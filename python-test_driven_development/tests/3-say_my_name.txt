@@ -1,0 +1,46 @@
+# The ``3-say_my_name.py`` module
+===================================
+Function say_my_name
+===================================
+
+Regular functionality:
+	    >>> say_my_name("Steve", "Perry")
+	    My name is Steve Perry
+
+First name:
+	    >>> say_my_name("Jeff")
+	    My name is Bob 
+
+Last name:
+	    >>> say_my_name(, "Perry")
+    	    Traceback (most recent call last):
+	    SyntaxError: invalid syntax
+
+Int as first name:
+	    >>> say_my_name(90210, "Hills")
+    	    Traceback (most recent call last):
+	    TypeError: first_name must be a string
+
+Int as first name:
+	    >>> say_my_name("Steve", 12)
+    	    Traceback (most recent call last):
+	    TypeError: last_name must be a string
+
+None as first name:
+	    >>> say_my_name(None, "Perry")
+    	    Traceback (most recent call last):
+	    TypeError: first_name must be a string
+
+None as last name:
+	    >>> say_my_name("Steve", None)
+        	Traceback (most recent call last):
+	    TypeError: last_name must be a string
+
+Empty string:
+	    >>> say_my_name("", "")
+	    My name is  
+
+No arguments:
+	    >>> say_my_name()
+    	    Traceback (most recent call last):
+	    TypeError: say_my_name() missing 1 required positional argument: 'first_name'
