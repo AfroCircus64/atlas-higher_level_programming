@@ -6,6 +6,7 @@ Function print_sorted
     >>> MyList = __import__('1-my_list').MyList
     >>> my_list = MyList()
     >>> isinstance(my_list, list)
+    True
     >>> my_list.print_sorted()
     []
 
@@ -22,15 +23,14 @@ Adding Items '0':
     [0, 4, 5, 8]
 
 Adding Items '-':
-    >>> my_list.append(-9)
     >>> my_list.append(-3)
-    [-9, -3, 0, 4, 5, 8]
+    [-3, 0, 4, 5, 8]
 
 Adding Items - Repeats:
     >>> my_list.append(5)
     >>> my_list.append(-3)
     >>> my_list.print_sorted()
-    [-9, -3, -3, 0, 4, 5, 5, 8]
+    [-3, -3, 0, 4, 5, 5, 8]
 
 Adding Items - Same Items:
     >>> my_list.clear()
