@@ -1,0 +1,20 @@
+# The ``7-base_geometry`` module
+==================================
+Function print_sorted
+==================================
+
+    >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+    >>> Base_G = BaseGeometry()
+
+Positive Integer:
+    >>> Base_G.integer_validator("int", 8)
+
+Negative Integer (ValueError):
+    >>> Base_G.integer_validator("neg_int", -5)
+    Traceback (most recent call last):
+    ValueError: number must be greater than 0
+
+Multiple Arguments (TypeError):
+    >>> Base_G.integer_validator("mult_args", 3, 9)
+    Traceback (most recent call last):
+    TypeError: integer_validator() takes 3 positional arguments but 4 were given
