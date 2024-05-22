@@ -17,10 +17,10 @@ class Student:
         """retrieves a dictionary representation of a Student"""
 
         if attrs is not None:
-            return self.__dict__
-        dict_1 = {}
-        for key, value in self.__dict__.items():
-            for i in attrs:
-                if key == i:
-                    dict_1[key] = value
-        return dict_1
+            dict_1 = {}
+            for i in vars(self):
+                if i in attrs:
+                    dict_1[i] = vars(self)[i]
+            return dict_1
+        else:
+            return vars(self)
