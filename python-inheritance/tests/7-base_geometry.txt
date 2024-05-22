@@ -12,7 +12,7 @@ Positive Integer:
 Negative Integer (ValueError):
     >>> Base_G.integer_validator("neg_int", -5)
     Traceback (most recent call last):
-    ValueError: number must be greater than 0
+    ValueError: neg_int must be greater than 0
 
 Multiple Arguments (TypeError):
     >>> Base_G.integer_validator("mult_args", 3, 9)
