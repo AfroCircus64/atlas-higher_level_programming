@@ -10,5 +10,7 @@ class Rectangle(BaseException):
     def __init__(self, width, height):
         """Initialize the Rectangle"""
 
-        self._Rectangle__width = self.integer_validator("width", width)
-        self._Rectangle__height = self.integer_validator("height", height)
+        self.integer_validator("width", width)
+        self.integer_validator("height", height)
+        self._Rectangle__width = width
+        self._Rectangle__height = height
