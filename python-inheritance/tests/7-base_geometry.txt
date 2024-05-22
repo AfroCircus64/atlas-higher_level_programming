@@ -18,3 +18,9 @@ Multiple Arguments (TypeError):
     >>> Base_G.integer_validator("mult_args", 3, 9)
     Traceback (most recent call last):
     TypeError: integer_validator() takes 3 positional arguments but 4 were given
+
+Exception Error:
+    >>> Base_G.area()
+    Traceback (most recent call last):
+    ...
+    Exception: area() is not implemented
