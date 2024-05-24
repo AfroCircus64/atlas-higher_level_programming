@@ -106,3 +106,4 @@ class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
 
 if __name__ == '__main__':
     unittest.main()
+    print("OK")
