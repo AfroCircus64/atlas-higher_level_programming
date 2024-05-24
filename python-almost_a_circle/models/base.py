@@ -6,8 +6,11 @@ import json
 class Base:
     _instances = []
 
-    def __init__(self):
-        self.id = len(self._instances)
+    def __init__(self, id=None):
+        if id is not None:
+            self.id = id
+        else:
+            self.id = len(self._instances)
         self._instances.append(self)
 
     @classmethod
@@ -22,7 +25,11 @@ class Base:
     @classmethod
     def from_json_string(cls, json_str=None, dictionary=None):
         if json_str is not None:
-            return cls(**json.loads(json_str))
+            data = json.loads(json_str)
+            if isinstance(data, list):
+                return [cls(**item) for item in data]
+            else:
+                return cls(**data)
         elif dictionary is not None:
             return cls(**dictionary)
         else:
