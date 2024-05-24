@@ -8,6 +8,7 @@ from models.rectangle import Rectangle
 
 from models.square import Square
 
+
 class TestBase(unittest.TestCase):
     def test_base_init(self):
         b = Base()
@@ -49,6 +50,7 @@ class TestBase(unittest.TestCase):
 
     # Add other Base tests here
 
+
 class TestRectangle(TestBase):
     def test_rectangle_init(self):
         r = Rectangle(1, 2)
@@ -80,6 +82,7 @@ class TestRectangle(TestBase):
 
     # Add other Rectangle tests here
 
+
 class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
     def test_square_init(self):
         s = Square(1)
@@ -99,6 +102,7 @@ class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
         self.assertEqual(s.size, 5)
         self.assertEqual(s.x, 6)
         self.assertEqual(s.y, 7)
+
 
 if __name__ == '__main__':
     unittest.main()

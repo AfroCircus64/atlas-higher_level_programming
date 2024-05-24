@@ -2,6 +2,7 @@
 
 import json
 
+
 class Base:
     _instances = []
 
