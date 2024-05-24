@@ -28,6 +28,9 @@ class Rectangle(Base):
             'y': self.y
         }
 
-    def update(self, **kwargs):
+    def update(self, *args, **kwargs):
         for key, value in kwargs.items():
+            if key in ['width', 'height']:
+                if not isinstance(value, int) or value <= 0:
+                    raise ValueError(f"{key} must be a positive integer.")
             setattr(self, key, value)
