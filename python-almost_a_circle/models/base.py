@@ -6,12 +6,13 @@ import json
 class Base:
     _instances = []
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, **kwargs):
         if id is not None:
             self.id = id
         else:
             self.id = len(self._instances)
         self._instances.append(self)
+        self.additional_attributes = kwargs
 
     @classmethod
     def to_json_string(cls, obj):

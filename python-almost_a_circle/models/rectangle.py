@@ -4,12 +4,12 @@ from models.base import Base
 
 
 class Rectangle(Base):
-    def __init__(self, *args):
-        super().__init__()
-        self.width = args[0]
-        self.height = args[1] if len(args) > 1 else 1
-        self.x = args[2] if len(args) > 2 else 0
-        self.y = args[3] if len(args) > 3 else 0
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.width = kwargs.get('width')
+        self.height = kwargs.get('height', 1)
+        self.x = kwargs.get('x', 0)
+        self.y = kwargs.get('y', 0)
 
     def area(self):
         return self.width * self.height

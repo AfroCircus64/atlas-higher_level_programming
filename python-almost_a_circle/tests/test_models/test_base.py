@@ -48,8 +48,9 @@ class TestBase(unittest.TestCase):
     def test_base_from_json_object(self):
         obj = '[{"id": 89}]'
         result = Base.from_json_string(obj)
-        expected = {'id': 89}
-        self.assertEqual(result, expected)
+        expected = Base(id=89)
+        self.assertEqual(type(result[0]), type(expected))
+        self.assertEqual(result[0].id, expected.id)
 
     # Add other Base tests here
 
@@ -59,13 +60,13 @@ class TestRectangle(TestBase):
         Base._instances.clear()
 
     def test_rectangle_init(self):
-        r = Rectangle(1, 2)
+        r = Rectangle(width=1, height=2)
         self.assertIsInstance(r, Rectangle)
         self.assertEqual(r.width, 1)
         self.assertEqual(r.height, 2)
 
     def test_rectangle_all_parameters(self):
-        r = Rectangle(1, 2, 3, 4)
+        r = Rectangle(width=1, height=2, x=3, y=4)
         self.assertIsInstance(r, Rectangle)
         self.assertEqual(r.width, 1)
         self.assertEqual(r.height, 2)
@@ -73,15 +74,15 @@ class TestRectangle(TestBase):
         self.assertEqual(r.y, 4)
 
     def test_rectangle_area(self):
-        r = Rectangle(1, 2)
+        r = Rectangle(width=1, height=2)
         self.assertEqual(r.area(), 2)
 
     def test_rectangle_display_noxy(self):
-        r = Rectangle(1, 2)
+        r = Rectangle(width=1, height=2)
         r.display()
 
     def test_rectangle_update(self):
-        r = Rectangle(1, 2, 3, 4)
+        r = Rectangle(width=1, height=2, x=3, y=4)
         r.update(x=5, y=6)
         self.assertEqual(r.x, 5)
         self.assertEqual(r.y, 6)
@@ -94,19 +95,19 @@ class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
         Base._instances.clear()
 
     def test_square_init(self):
-        s = Square(1)
+        s = Square(size=1)
         self.assertIsInstance(s, Square)
         self.assertEqual(s.size, 1)
 
     def test_square_init_all_parameters(self):
-        s = Square(1, 2, 3, 4)
+        s = Square(size=1, x=2, y=3)
         self.assertIsInstance(s, Square)
         self.assertEqual(s.size, 1)
         self.assertEqual(s.x, 2)
         self.assertEqual(s.y, 3)
 
     def test_square_updates(self):
-        s = Square(1, 2, 3, 4)
+        s = Square(size=1, x=2, y=3)
         s.update(size=5, x=6, y=7)
         self.assertEqual(s.size, 5)
         self.assertEqual(s.x, 6)
