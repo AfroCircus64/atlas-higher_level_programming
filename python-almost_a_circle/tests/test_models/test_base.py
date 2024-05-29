@@ -2,6 +2,10 @@
 
 import unittest
 
+import io
+
+import sys
+
 from models.base import Base
 
 from models.rectangle import Rectangle
@@ -86,6 +90,35 @@ class TestRectangle(TestBase):
         r.update(x=5, y=6)
         self.assertEqual(r.x, 5)
         self.assertEqual(r.y, 6)
+
+    def test_rectangle_str(self):
+        r = Rectangle(width=4, height=3, x=2, y=1)
+        expected_str = "Rectangle(4, 3, 2, 1)"
+        self.assertEqual(str(r), expected_str)
+
+    def test_rectangle_display_without_xy(self):
+        r = Rectangle(width=3, height=2)
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+        r.display()
+        sys.stdout = sys.__stdout__
+        expected_output = "Displaying rectangle with width=3, height=2, x=0, y=0\n"
+        self.assertEqual(captured_output.getvalue(), expected_output)
+
+    def test_rectangle_display_without_y(self):
+        r = Rectangle(width=3, height=2, x=1)
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+        r.display()
+        sys.stdout = sys.__stdout__
+        expected_output = "Displaying rectangle with width=3, height=2, x=1, y=0\n"
+        self.assertEqual(captured_output.getvalue(), expected_output)
+
+    def test_rectangle_to_dictionary(self):
+        r = Rectangle(width=4, height=3, x=2, y=1)
+        r_dict = r.to_dictionary()
+        expected_dict = {'id': r.id, 'width': 4, 'height': 3, 'x': 2, 'y': 1}
+        self.assertEqual(r_dict, expected_dict)
 
     # Add other Rectangle tests here
 

@@ -16,11 +16,11 @@ class Rectangle(Base):
 
     def __str__(self):
         return ("Rectangle({}, {}, {},\
-                 {})".format(self.width, self.height, self.x, self.y))
+ {})".format(self.width, self.height, self.x, self.y))
 
     def display(self):
-        print("Displaying rectangle with width={}, height={}, x={},\
-                y={}".format(self.width, self.height, self.x, self.y))
+        print("Displaying rectangle with width={}, height={}, x={}, y={}".format(
+            self.width, self.height, self.x, self.y))
 
     def to_dictionary(self):
         return {
