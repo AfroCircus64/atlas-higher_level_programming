@@ -220,5 +220,74 @@ class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
         self.assertEqual(s.x, 6)
         self.assertEqual(s.y, 7)
 
+    def test_square_str(self):
+        s = Square(size=4)
+        expected_str = "Square(4, 0, 0, 0)"
+        self.assertEqual(str(s), expected_str)
+
+    def test_square_to_dictionary(self):
+        s = Square(size=4)
+        s_dict = s.to_dictionary()
+        expected_dict = {'id': s.id, 'size': 4, 'x': 0, 'y': 0}
+        self.assertEqual(s_dict, expected_dict)
+
+    def test_square_create_id_only(self):
+        s = Square.create(id=89)
+        self.assertIsInstance(s, Square)
+        self.assertEqual(s.id, 89)
+
+    def test_square_create_id_size(self):
+        s = Square.create(id=89, size=1)
+        self.assertIsInstance(s, Square)
+        self.assertEqual(s.id, 89)
+        self.assertEqual(s.size, 1)
+
+    def test_square_create_id_size_x(self):
+        s = Square.create(id=89, size=1, x=2)
+        self.assertIsInstance(s, Square)
+        self.assertEqual(s.id, 89)
+        self.assertEqual(s.size, 1)
+        self.assertEqual(s.x, 2)
+
+    def test_square_create_id_size_x_y(self):
+        s = Square.create(id=89, size=1, x=2, y=3)
+        self.assertIsInstance(s, Square)
+        self.assertEqual(s.id, 89)
+        self.assertEqual(s.size, 1)
+        self.assertEqual(s.x, 2)
+        self.assertEqual(s.y, 3)
+
+    def test_square_save_to_file_none(self):
+        Square.save_to_file(None)
+        with open('squares.json', 'r') as f:
+            content = f.read()
+        self.assertEqual(content, "[]")
+
+    def test_square_save_to_file_empty_list(self):
+        Square.save_to_file([])
+        with open('squares.json', 'r') as f:
+            content = f.read()
+        self.assertEqual(content, "[]")
+
+    def test_square_save_to_file_objects(self):
+        s = Square(size=1)
+        Square.save_to_file([s])
+        with open('squares.json', 'r') as f:
+            content = f.read()
+        self.assertIn('"id"', content)
+        self.assertIn('"size"', content)
+
+    def test_square_load_from_file_not_exists(self):
+        temp_file_path = tempfile.mktemp()
+        squares = Square.load_from_file(filename=temp_file_path)
+        self.assertEqual(len(squares), 0)
+
+    def test_square_load_from_file_exists(self):
+        s = Square(size=1)
+        Square.save_to_file([s])
+        squares = Square.load_from_file()
+        self.assertEqual(len(squares), 1)
+        self.assertEqual(squares[0].size, 1)
+
 if __name__ == "__main__":
     unittest.main()
