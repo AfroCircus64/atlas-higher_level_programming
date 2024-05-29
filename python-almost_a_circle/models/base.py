@@ -27,14 +27,15 @@ class Base:
     def from_json_string(cls, json_str=None, dictionary=None):
         if json_str is not None:
             data = json.loads(json_str)
-            if isinstance(data, list):
-                return [cls(**item) for item in data]
-            else:
-                return cls(**data)
         elif dictionary is not None:
-            return cls(**dictionary)
+            data = dictionary
         else:
             return None
+
+        if isinstance(data, list):
+            return [cls(**item) for item in data]
+        else:
+            return cls(**data)
 
     @classmethod
     def saveToFile(cls, listObjs):
@@ -49,3 +50,17 @@ class Base:
             return [cls.from_json_string(data) for data in objs_data]
         except FileNotFoundError:
             return []
+
+
+    """@classmethod
+    def from_json_string(cls, json_str=None, dictionary=None):
+        if json_str is not None:
+            data = json.loads(json_str)
+            if isinstance(data, list):
+                return [cls(**item) for item in data]
+            else:
+                return cls(**data)
+        elif dictionary is not None:
+            return cls(**dictionary)
+        else:
+            return None"""

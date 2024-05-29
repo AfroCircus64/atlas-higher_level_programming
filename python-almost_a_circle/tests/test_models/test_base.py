@@ -4,7 +4,11 @@ import unittest
 
 import io
 
+import os
+
 import sys
+
+import tempfile
 
 from models.base import Base
 
@@ -120,8 +124,78 @@ class TestRectangle(TestBase):
         expected_dict = {'id': r.id, 'width': 4, 'height': 3, 'x': 2, 'y': 1}
         self.assertEqual(r_dict, expected_dict)
 
-    # Add other Rectangle tests here
+    def test_rectangle_create_with_id(self):
+        r = Rectangle.create(**{'id': 89})
+        self.assertEqual(r.id, 89)
 
+    def test_rectangle_create_with_width(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1})
+        self.assertEqual(r.id, 89)
+        self.assertEqual(r.width, 1)
+
+    def test_rectangle_create_with_height(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2})
+        self.assertEqual(r.id, 89)
+        self.assertEqual(r.width, 1)
+        self.assertEqual(r.height, 2)
+
+    def test_rectangle_create_with_x(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2, 'x': 3})
+        self.assertEqual(r.id, 89)
+        self.assertEqual(r.width, 1)
+        self.assertEqual(r.height, 2)
+        self.assertEqual(r.x, 3)
+
+    def test_rectangle_create_with_y(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2, 'x': 3, 'y': 4})
+        self.assertEqual(r.id, 89)
+        self.assertEqual(r.width, 1)
+        self.assertEqual(r.height, 2)
+        self.assertEqual(r.x, 3)
+        self.assertEqual(r.y, 4)
+
+    def test_rectangle_save_to_file_none(self):
+        Rectangle.save_to_file(None)
+        with open('rectangles.json', 'r') as f:
+            content = f.read()
+        self.assertEqual(content, "[]")
+
+    def test_rectangle_save_to_file_empty_list(self):
+        Rectangle.save_to_file([])
+        with open('rectangles.json', 'r') as f:
+            content = f.read()
+        self.assertEqual(content, "[]")
+
+    def test_rectangle_save_to_file_objects(self):
+        r = Rectangle(width=1, height=2)
+        Rectangle.save_to_file([r])
+        with open('rectangles.json', 'r') as f:
+            content = f.read()
+        self.assertIn('"id"', content)
+        self.assertIn('"width"', content)
+        self.assertIn('"height"', content)
+
+    """def test_rectangle_load_from_file_not_exists(self):
+        rects = Rectangle.load_from_file()
+        self.assertEqual(len(rects), 0)"""
+
+    def test_rectangle_load_from_file_not_exists(self):
+        temp_file_path = tempfile.mktemp()
+        r = Rectangle(width=1, height=2)
+        Rectangle.save_to_file([r], filename=temp_file_path)
+        os.remove(temp_file_path)
+        rects = Rectangle.load_from_file(filename=temp_file_path)
+        self.assertEqual(len(rects), 0)
+
+    def test_rectangle_load_from_file_exists(self):
+        r = Rectangle(width=1, height=2)
+        Rectangle.save_to_file([r])
+        rects = Rectangle.load_from_file()
+        self.assertEqual(len(rects), 1)
+        self.assertEqual(rects[0].width, 1)
+        self.assertEqual(rects[0].height, 2)
+
+    # Add other Rectangle tests here
 
 class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
     def setUp(self):

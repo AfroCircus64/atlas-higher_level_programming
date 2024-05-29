@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import json
+
 from models.base import Base
 
 
@@ -10,6 +12,26 @@ class Rectangle(Base):
         self.height = kwargs.get('height', 1)
         self.x = kwargs.get('x', 0)
         self.y = kwargs.get('y', 0)
+
+    @classmethod
+    def create(cls, **kwargs):
+        return cls(**kwargs)
+
+    @staticmethod
+    def save_to_file(list_objs, filename='rectangles.json'):
+        if list_objs is None:
+            list_objs = []
+        with open(filename, 'w') as f:
+            json.dump([obj.to_dictionary() for obj in list_objs], f)
+
+    @classmethod
+    def load_from_file(cls, filename='rectangles.json'):
+        try:
+            with open(filename, 'r') as f:
+                objs_data = json.load(f)
+            return [cls(**item) for item in objs_data]
+        except FileNotFoundError:
+            return []
 
     def area(self):
         return self.width * self.height
