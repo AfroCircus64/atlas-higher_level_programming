@@ -24,30 +24,20 @@ class Base:
             Base.__nb_objects += 1
             self.id = Base.__nb_objects
 
-    @classmethod
-    def to_json_string(cls, obj):
-        """Converts to JSON string."""
-        if obj is None:
-            return None
-        elif isinstance(obj, list):
-            return json.dumps(obj)
+    @staticmethod
+    def to_json_string(list_dictionaries):
+        """make json file"""
+        if list_dictionaries is None or len(list_dictionaries) == 0:
+            return "[]"
         else:
-            return json.dumps(obj.__dict__)
+            return json.dumps(list_dictionaries)
 
-    @classmethod
-    def from_json_string(cls, json_str=None, dictionary=None):
-        """Creates an instance from a JSON string."""
-        if json_str is not None:
-            data = json.loads(json_str)
-        elif dictionary is not None:
-            data = dictionary
-        else:
-            return None
-
-        if isinstance(data, list):
-            return [cls(**item) for item in data]
-        else:
-            return cls(**data)
+    @staticmethod
+    def from_json_string(json_string):
+        """returns from json file"""
+        if json_string is None or len(json_string) == 0:
+            return []
+        return json.loads(json_string)
 
     @classmethod
     def saveToFile(cls, listObjs):
