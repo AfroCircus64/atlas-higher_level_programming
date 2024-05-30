@@ -65,3 +65,23 @@ class Square(Rectangle):
             return [cls(**item) for item in data]
         except FileNotFoundError:
             return []
+
+    def update(self, *args, **kwargs):
+        """Updates the square"""
+        if args and len(args) > 0:
+            attributes = ['id', 'size', "x", "y"]
+            for index, arg in enumerate(args):
+                if index < len(attributes):
+                    if attributes[index] == "size":
+                        self.width = arg
+                        self.height = arg
+                    else:
+                        setattr(self, attributes[index], arg)
+        else:
+            for key, arg in kwargs.items():
+                if hasattr(self, key):
+                    if key == "size":
+                        self.width = arg
+                        self.height = arg
+                    else:
+                        setattr(self, key, arg)
