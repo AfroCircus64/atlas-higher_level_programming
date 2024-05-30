@@ -9,7 +9,7 @@ import json
 class Base:
     """
     Base class for managing geometric shapes.
-    
+
     Attributes:
         __nb_objects (int): Number of Base instances created.
         id (int): Unique identifier for each instance.
