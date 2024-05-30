@@ -106,9 +106,13 @@ class Rectangle(Base):
  {})".format(self.width, self.height, self.x, self.y))
 
     def display(self):
-        """displays the rectangle"""
-        print("Displaying rectangle with width={}, height={}, x={},\
- y={}".format(self.width, self.height, self.x, self.y))
+        """function to display the rectangle"""
+        print("\n" * self.y, end='')
+        for row in range(self.height):
+            print(" " * self.x, end='')
+            for col in range(self.width):
+                print("#", end='')
+            print()
 
     def to_dictionary(self):
         """dict for the parameters"""
