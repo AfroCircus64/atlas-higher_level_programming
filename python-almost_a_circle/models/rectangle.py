@@ -11,7 +11,7 @@ from models.base import Base
 class Rectangle(Base):
     """
     Defines a Rectangle class that inherits from Base.
-    
+
     Attributes:
         __width (int): Width of the rectangle.
         __height (int): Height of the rectangle.
@@ -107,8 +107,8 @@ class Rectangle(Base):
 
     def display(self):
         """displays the rectangle"""
-        print("Displaying rectangle with width={}, height={}, x={}, y={}".format(
-            self.width, self.height, self.x, self.y))
+        print("Displaying rectangle with width={}, height={}, x={},\
+ y={}".format(self.width, self.height, self.x, self.y))
 
     def to_dictionary(self):
         """dict for the parameters"""
