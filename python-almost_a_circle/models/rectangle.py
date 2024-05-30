@@ -78,23 +78,23 @@ class Rectangle(Base):
         """create func"""
         return cls(**kwargs)
 
-    @staticmethod
-    def save_to_file(list_objs, filename='rectangles.json'):
+    #@staticmethod
+    #def save_to_file(list_objs, filename='rectangles.json'):
         """save to file func"""
-        if list_objs is None:
-            list_objs = []
-        with open(filename, 'w') as f:
-            json.dump([obj.to_dictionary() for obj in list_objs], f)
+        #if list_objs is None:
+            #list_objs = []
+        #with open(filename, 'w') as f:
+            #json.dump([obj.to_dictionary() for obj in list_objs], f)
 
-    @classmethod
-    def load_from_file(cls, filename='rectangles.json'):
-        """load from file func"""
-        try:
-            with open(filename, 'r') as f:
-                objs_data = json.load(f)
-            return [cls(**item) for item in objs_data]
-        except FileNotFoundError:
-            return []
+    #@classmethod
+    #def load_from_file(cls, filename='rectangles.json'):
+        #"""load from file func"""
+        #try:
+    #        with open(filename, 'r') as f:
+    #            objs_data = json.load(f)
+    #        return [cls(**item) for item in objs_data]
+    #    except FileNotFoundError:
+    #        return []
 
     def area(self):
         """returns the area"""

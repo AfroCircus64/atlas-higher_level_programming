@@ -48,23 +48,23 @@ class Square(Rectangle):
         """create func"""
         return cls(**kwargs)
 
-    @classmethod
-    def save_to_file(cls, list_objs=None, filename="squares.json"):
-        """save to file func"""
-        if list_objs is None:
-            list_objs = []
-        with open(filename, 'w') as f:
-            json.dump([obj.to_dictionary() for obj in list_objs], f)
+#    @classmethod
+#    def save_to_file(cls, list_objs=None, filename="squares.json"):
+#        """save to file func"""
+#        if list_objs is None:
+#            list_objs = []
+#        with open(filename, 'w') as f:
+#            json.dump([obj.to_dictionary() for obj in list_objs], f)
 
-    @classmethod
-    def load_from_file(cls, filename="squares.json"):
-        """load from file func"""
-        try:
-            with open(filename, 'r') as f:
-                data = json.load(f)
-            return [cls(**item) for item in data]
-        except FileNotFoundError:
-            return []
+#    @classmethod
+#    def load_from_file(cls, filename="squares.json"):
+#        """load from file func"""
+#        try:
+#            with open(filename, 'r') as f:
+#                data = json.load(f)
+#            return [cls(**item) for item in data]
+#        except FileNotFoundError:
+#            return []
 
     def update(self, *args, **kwargs):
         """Updates the square"""
