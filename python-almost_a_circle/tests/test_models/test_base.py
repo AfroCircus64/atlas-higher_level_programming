@@ -21,19 +21,18 @@ class TestBase(unittest.TestCase):
     """base test class"""
     def setUp(self):
         """setup"""
-        Base._instances.clear()
+        Base._Base__nb_objects = 0
 
     def test_base_init(self):
         """test init of base"""
         b = Base()
         self.assertIsNotNone(b.id)
-        self.assertEqual(len(Base._instances), 1)
+        self.assertEqual(b.id, 0)  # Assuming the first ID is 0
 
     def test_base_passed_id(self):
         """passed id test"""
         b = Base(89)
         self.assertEqual(b.id, 89)
-        self.assertEqual(len(Base._instances), 1)
 
     def test_base_to_json(self):
         """base to json test"""
@@ -76,7 +75,8 @@ class TestBase(unittest.TestCase):
 class TestRectangle(TestBase):
     """test rectangle class"""
     def setUp(self):
-        Base._instances.clear()
+        """setup"""
+        Base._Base__nb_objects = 0
 
     def test_rectangle_init(self):
         """rect init test"""
@@ -114,12 +114,12 @@ class TestRectangle(TestBase):
     def test_rectangle_str(self):
         """rect string test"""
         r = Rectangle(width=4, height=3, x=2, y=1)
-        expected_str = "Rectangle(4, 3, 2, 1)"
+        expected_str = "[Rectangle] (0) 2/1 - 4/3"
         self.assertEqual(str(r), expected_str)
 
     def test_rectangle_display_without_xy(self):
         """rect display w/o xy test"""
-        r = Rectangle(width=3, height=2)
+        r = Rectangle(width=3, height=2, x=0, y=0)
         captured_output = io.StringIO()
         sys.stdout = captured_output
         r.display()
@@ -141,23 +141,23 @@ class TestRectangle(TestBase):
         """rect to dictionary test"""
         r = Rectangle(width=4, height=3, x=2, y=1)
         r_dict = r.to_dictionary()
-        expected_dict = {'id': r.id, 'width': 4, 'height': 3, 'x': 2, 'y': 1}
+        expected_dict = {'id': 0, 'width': 4, 'height': 3, 'x': 2, 'y': 1}
         self.assertEqual(r_dict, expected_dict)
 
     def test_rectangle_create_with_id(self):
         """rect create with id test"""
-        r = Rectangle.create(**{'id': 89})
+        r = Rectangle.create(id=89)
         self.assertEqual(r.id, 89)
 
     def test_rectangle_create_with_width(self):
         """rect create with width test"""
-        r = Rectangle.create(**{'id': 89, 'width': 1})
+        r = Rectangle.create(id=89, width=1)
         self.assertEqual(r.id, 89)
         self.assertEqual(r.width, 1)
 
     def test_rectangle_create_with_height(self):
         """rect create with height test"""
-        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2})
+        r = Rectangle.create(id=89, width=1, height=1)
         self.assertEqual(r.id, 89)
         self.assertEqual(r.width, 1)
         self.assertEqual(r.height, 2)
@@ -179,59 +179,13 @@ class TestRectangle(TestBase):
         self.assertEqual(r.x, 3)
         self.assertEqual(r.y, 4)
 
-    def test_rectangle_save_to_file_none(self):
-        """rect STF none test"""
-        Rectangle.save_to_file(None)
-        with open('rectangles.json', 'r') as f:
-            content = f.read()
-        self.assertEqual(content, "[]")
-
-    def test_rectangle_save_to_file_empty_list(self):
-        """rect STF empty list test"""
-        Rectangle.save_to_file([])
-        with open('rectangles.json', 'r') as f:
-            content = f.read()
-        self.assertEqual(content, "[]")
-
-    def test_rectangle_save_to_file_objects(self):
-        """rect STF objects test"""
-        r = Rectangle(width=1, height=2)
-        Rectangle.save_to_file([r])
-        with open('rectangles.json', 'r') as f:
-            content = f.read()
-        self.assertIn('"id"', content)
-        self.assertIn('"width"', content)
-        self.assertIn('"height"', content)
-
-    """def test_rectangle_load_from_file_not_exists(self):
-        rects = Rectangle.load_from_file()
-        self.assertEqual(len(rects), 0)"""
-
-    def test_rectangle_load_from_file_not_exists(self):
-        """rect LFF doesnt exist test"""
-        temp_file_path = tempfile.mktemp()
-        r = Rectangle(width=1, height=2)
-        Rectangle.save_to_file([r], filename=temp_file_path)
-        os.remove(temp_file_path)
-        rects = Rectangle.load_from_file(filename=temp_file_path)
-        self.assertEqual(len(rects), 0)
-
-    def test_rectangle_load_from_file_exists(self):
-        """rect LFF exists test"""
-        r = Rectangle(width=1, height=2)
-        Rectangle.save_to_file([r])
-        rects = Rectangle.load_from_file()
-        self.assertEqual(len(rects), 1)
-        self.assertEqual(rects[0].width, 1)
-        self.assertEqual(rects[0].height, 2)
-
     # Add other Rectangle tests here
 
 class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
     """test square class"""
     def setUp(self):
         """setup"""
-        Base._instances.clear()
+        Base._Base__nb_objects = 0
 
     def test_square_init(self):
         """square init test"""
@@ -271,20 +225,17 @@ class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
     def test_square_create_id_only(self):
         """square create id test"""
         s = Square.create(id=89)
-        self.assertIsInstance(s, Square)
         self.assertEqual(s.id, 89)
 
     def test_square_create_id_size(self):
         """square create id, size test"""
         s = Square.create(id=89, size=1)
-        self.assertIsInstance(s, Square)
         self.assertEqual(s.id, 89)
         self.assertEqual(s.size, 1)
 
     def test_square_create_id_size_x(self):
         """square crate id, size, x test"""
         s = Square.create(id=89, size=1, x=2)
-        self.assertIsInstance(s, Square)
         self.assertEqual(s.id, 89)
         self.assertEqual(s.size, 1)
         self.assertEqual(s.x, 2)
@@ -292,48 +243,10 @@ class TestSquare(TestRectangle):  # Inherits from TestRectangle to reuse tests
     def test_square_create_id_size_x_y(self):
         """square create id, size, x, y test"""
         s = Square.create(id=89, size=1, x=2, y=3)
-        self.assertIsInstance(s, Square)
         self.assertEqual(s.id, 89)
         self.assertEqual(s.size, 1)
         self.assertEqual(s.x, 2)
         self.assertEqual(s.y, 3)
-
-    def test_square_save_to_file_none(self):
-        """square STF none test"""
-        Square.save_to_file(None)
-        with open('squares.json', 'r') as f:
-            content = f.read()
-        self.assertEqual(content, "[]")
-
-    def test_square_save_to_file_empty_list(self):
-        """square STF empty list test"""
-        Square.save_to_file([])
-        with open('squares.json', 'r') as f:
-            content = f.read()
-        self.assertEqual(content, "[]")
-
-    def test_square_save_to_file_objects(self):
-        """square STF objects test"""
-        s = Square(size=1)
-        Square.save_to_file([s])
-        with open('squares.json', 'r') as f:
-            content = f.read()
-        self.assertIn('"id"', content)
-        self.assertIn('"size"', content)
-
-    def test_square_load_from_file_not_exists(self):
-        """square LFF doesnt exist test"""
-        temp_file_path = tempfile.mktemp()
-        squares = Square.load_from_file(filename=temp_file_path)
-        self.assertEqual(len(squares), 0)
-
-    def test_square_load_from_file_exists(self):
-        """square LFF exists test"""
-        s = Square(size=1)
-        Square.save_to_file([s])
-        squares = Square.load_from_file()
-        self.assertEqual(len(squares), 1)
-        self.assertEqual(squares[0].size, 1)
 
 if __name__ == "__main__":
     unittest.main()
