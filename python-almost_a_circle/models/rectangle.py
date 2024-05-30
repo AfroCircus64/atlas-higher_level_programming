@@ -102,8 +102,8 @@ class Rectangle(Base):
 
     def __str__(self):
         """format of the rectangle returns"""
-        return ("Rectangle({}, {}, {},\
- {})".format(self.width, self.height, self.x, self.y))
+        return ("[Rectangle] ({}) {}/{} - {}/{}"
+                .format(self.id, self.x, self.y, self.width, self.height))
 
     def display(self):
         """function to display the rectangle"""
