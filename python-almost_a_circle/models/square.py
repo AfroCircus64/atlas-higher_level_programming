@@ -11,7 +11,7 @@ from models.rectangle import Rectangle
 class Square(Rectangle):
     """
     Defines a Square class that inherits from Rectangle.
-    
+
     Attributes:
         size (int): Size of the square.
     """
