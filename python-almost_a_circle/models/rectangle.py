@@ -126,8 +126,17 @@ class Rectangle(Base):
 
     def update(self, *args, **kwargs):
         """updates the rectangle"""
+        args_len = len(args)
+        if args_len >= 1:
+            self.id = args[0]
+        if args_len >= 2:
+            self.width = args[1]
+        if args_len >= 3:
+            self.height = args[2]
+        if args_len >= 4:
+            self.x = args[3]
+        if args_len >= 5:
+            self.y = args[4]
+
         for key, value in kwargs.items():
-            if key in ['width', 'height']:
-                if not isinstance(value, int) or value <= 0:
-                    raise ValueError(f"{key} must be a positive integer.")
             setattr(self, key, value)
