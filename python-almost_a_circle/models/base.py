@@ -16,14 +16,13 @@ class Base:
     """
     __nb_objects = 0
 
-    def __init__(self, id=None, **kwargs):
-        """Initializes the base."""
+    def __init__(self, id=None):
+        """initializes the base"""
         if id is not None:
             self.id = id
         else:
-            self.id = Base.__nb_objects
             Base.__nb_objects += 1
-        self.additional_attributes = kwargs
+            self.id = Base.__nb_objects
 
     @classmethod
     def to_json_string(cls, obj):
