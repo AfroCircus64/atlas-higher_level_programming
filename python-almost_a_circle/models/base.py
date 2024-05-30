@@ -52,13 +52,13 @@ class Base:
             f.write(json_string)
 
     @classmethod
-    def loadFromFile(cls):
+    def load_from_file(cls):
         """Loads from file."""
-        filename = "{}.json".format(cls.__name__)
+        filename = cls.__name__ + ".json"
         try:
-            with open(filename, 'r') as f:
-                objs_data = json.load(f)
-                return [cls.from_json_string(data) for data in objs_data]
+            with open(filename, "r") as f:
+                list = cls.from_json_string(f.read())
+                return [cls.create(**dictionary) for dictionary in list]
         except FileNotFoundError:
             return []
 
