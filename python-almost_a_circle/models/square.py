@@ -15,10 +15,9 @@ class Square(Rectangle):
     Attributes:
         size (int): Size of the square.
     """
-    def __init__(self, **kwargs):
+    def __init__(self, size, x=0, y=0, id=None):
         """initializes the square"""
-        super().__init__(**kwargs)
-        self.size = kwargs.get('size')
+        super().__init__(size, size, x, y, id)
 
     @property
     def size(self):
@@ -32,7 +31,8 @@ class Square(Rectangle):
 
     def __str__(self):
         """format of the square returns"""
-        return "Square({}, {}, {}, {})".format(self.size, self.x, self.y, self.id)
+        return ("[Square] ({}) {}/{} - {}"
+                .format(self.id, self.x, self.y, self.width or self.height))
 
     def to_dictionary(self):
         """dict for the parameters of the square"""
