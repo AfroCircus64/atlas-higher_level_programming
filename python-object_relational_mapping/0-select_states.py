@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-"""lists all states from the database"""
+"""Defines a script"""
 
 import MySQLdb
 from sys import argv
 
 def State_list():
+    """lists all states from the database"""
     conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
                            passwd=argv[2], db=argv[3], charset="utf8")
     cur = conn.cursor()
