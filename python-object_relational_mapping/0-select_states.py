@@ -4,7 +4,7 @@
 import MySQLdb
 from sys import argv
 
-def State_list():
+if __name__ == "__main__":
     """lists all states from the database"""
     conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
                            passwd=argv[2], db=argv[3], charset="utf8")
@@ -17,6 +17,3 @@ def State_list():
 
     cur.close()
     conn.close()
-
-if __name__ == "__main__":
-    State_list()
