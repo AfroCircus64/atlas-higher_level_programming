@@ -2,7 +2,6 @@
 const request = require('request');
 const characterId = '18/';
 const filmApiUrl = process.argv[2];
-const characterApiUrl = 'https://swapi-api.hbtn.io/api/people/';
 
 request(filmApiUrl, function (err, response, body) {
   if (!err && response.statusCode === 200) {
@@ -10,11 +9,13 @@ request(filmApiUrl, function (err, response, body) {
     let movieCount = 0;
 
     films.forEach(function (film) {
-      const characters = film.characters;
-      if (characters.includes(characterApiUrl + characterId)) {
+      if (film.characters.includes(characterId)) {
         movieCount++;
       }
     });
+
     console.log(movieCount);
+  } else {
+    console.error(err);
   }
 });
